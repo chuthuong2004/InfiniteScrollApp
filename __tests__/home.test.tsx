@@ -1,7 +1,7 @@
 import {usePagination, useSearch} from '@hooks/helpers';
 import {useFavorite} from '@hooks/services';
+import {HomeScreen} from '@screens/app';
 import {act, fireEvent, render, waitFor} from '@testing-library/react-native';
-import HomeScreen from './home.screen';
 
 jest.mock('react-native-safe-area-context', () => {
   const React = require('react');

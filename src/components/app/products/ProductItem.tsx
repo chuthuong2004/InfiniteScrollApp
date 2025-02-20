@@ -23,7 +23,6 @@ const ProductItem = ({product, isFavorite, onFavorite}: ProductItemProps) => {
   const {colors} = useTheme();
   const translateX = useSharedValue(0);
   const initialTouchLocation = useSharedValue({x: 0, y: 0});
-  console.log('ProductItem: ', product.id);
 
   const backgroundColor = isFavorite ? 'red' : 'green';
   const title = isFavorite ? 'Remove Favorite' : 'Add Favorite';
@@ -110,7 +109,9 @@ const ProductItem = ({product, isFavorite, onFavorite}: ProductItemProps) => {
               </TextNormal>
               <View style={[flex.row, flex.justifyBetween]}>
                 <TextNormal>${product.price}</TextNormal>
-                <TouchableOpacity onPress={() => onFavorite?.(product)}>
+                <TouchableOpacity
+                  testID={`favorite-btn-${product.id}`}
+                  onPress={() => onFavorite?.(product)}>
                   <Image
                     source={isFavorite ? IMAGES.favorite : IMAGES.love}
                     style={styles.icon}
