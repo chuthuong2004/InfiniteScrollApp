@@ -126,4 +126,33 @@ describe('HomeScreen', () => {
       );
     });
   });
+
+  it('loads more products when scrolling to the end', async () => {
+    const mockOnEndReached = jest.fn();
+
+    usePagination.mockReturnValue({
+      data: {
+        products: [
+          {id: 1, title: 'Product A', price: 100, images: []},
+          {id: 2, title: 'Product B', price: 200, images: []},
+        ],
+        total: 4,
+      },
+      isLoadMore: false,
+      onEndReached: mockOnEndReached,
+      isValidating: false,
+      refresh: jest.fn(),
+    });
+
+    const {getByTestId} = render(<HomeScreen />);
+    const flatList = getByTestId('flatlist');
+
+    act(() => {
+      flatList.props.onEndReached();
+    });
+
+    await waitFor(() => {
+      expect(mockOnEndReached).toHaveBeenCalledTimes(1);
+    });
+  });
 });
