@@ -1,12 +1,10 @@
+import {StoreProduct} from '@/types/entities';
+import {IMAGES} from '@assets/images';
+import {Card, TextNormal} from '@components/shared';
 import {useTheme} from '@react-navigation/native';
+import {flex} from '@styles/flex.style';
 import React from 'react';
 import {Image, TouchableOpacity, View} from 'react-native';
-import {flex} from '../styles';
-import {StoreProduct} from '../types';
-import Card from './Card';
-import TextNormal from './TextNormal';
-import favoriteIcon from '../assets/images/love.png';
-import favoriteActiveIcon from '../assets/images/favorite.png';
 
 type ProductItemProps = {
   product: StoreProduct;
@@ -39,7 +37,7 @@ const ProductItem = ({product, isFavorite, onFavorite}: ProductItemProps) => {
           <TextNormal>${product.price}</TextNormal>
           <TouchableOpacity onPress={() => onFavorite?.(product)}>
             <Image
-              source={isFavorite ? favoriteActiveIcon : favoriteIcon}
+              source={isFavorite ? IMAGES.favorite : IMAGES.love}
               style={{width: 20, height: 20}}
             />
           </TouchableOpacity>

@@ -1,4 +1,4 @@
-import {APP_WIDTH} from '../utils/constants';
+import {APP_WIDTH} from '@utils/constants';
 import {StyleSheet} from 'react-native';
 type SpacingType = 'margin' | 'padding';
 

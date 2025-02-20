@@ -1,8 +1,8 @@
-import {COLORS_APP} from '../../utils/constants';
-import {FavoriteStack} from './favorites';
-import {HomeStack} from './home';
-import {AppStackParamList} from '.';
-import {flex, SHADOW_STYLE, spacing} from '../../styles';
+import {IMAGES} from '@assets/images';
+import {CardBottom, TextNormal} from '@components/shared';
+import {FavoriteStack} from '@navigation/app/favorites';
+import {HomeStack} from '@navigation/app/home';
+import {AppStackParamList} from '@navigation/app/types';
 import {
   BottomTabBarProps,
   BottomTabNavigationOptions,
@@ -10,11 +10,10 @@ import {
 } from '@react-navigation/bottom-tabs';
 import {PlatformPressable} from '@react-navigation/elements';
 import {useLinkBuilder, useTheme} from '@react-navigation/native';
+import {flex} from '@styles/flex.style';
+import {COLORS_APP} from '@utils/constants';
 import React, {useCallback} from 'react';
-import {Image, Text, View} from 'react-native';
-import {CardBottom, TextNormal} from '../../components';
-import homeIcon from '../../assets/images/home.png';
-import favoriteIcon from '../../assets/images/love.png';
+import {Image, Platform, View} from 'react-native';
 
 const RootStack = createBottomTabNavigator<AppStackParamList>();
 
@@ -45,14 +44,26 @@ export function AppNavigation() {
   );
 }
 
-function CustomTabBar({state, descriptors, navigation}) {
+function CustomTabBar({
+  state,
+  descriptors,
+  navigation,
+}: Readonly<BottomTabBarProps>) {
   const {colors} = useTheme();
   const {buildHref} = useLinkBuilder();
 
-  console.log('state', state);
-
   return (
-    <CardBottom style={[flex.row, {height: 90}]}>
+    <CardBottom
+      style={[
+        {
+          padding: 0,
+          gap: 0,
+          height: Platform.OS === 'ios' ? 80 : 70,
+          paddingBottom: 0,
+          borderTopWidth: 1,
+          borderColor: colors.border,
+        },
+      ]}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
         const label =
@@ -90,8 +101,10 @@ function CustomTabBar({state, descriptors, navigation}) {
               flex.heightFull,
               flex.itemsCenter,
               flex.justifyCenter,
+              flex.widthFull,
+              {paddingBottom: Platform.OS === 'android' ? 0 : 10},
             ]}
-            key={index}>
+            key={route.key}>
             <PlatformPressable
               href={buildHref(route.name, route.params)}
               accessibilityState={isFocused ? {selected: true} : {}}
@@ -99,11 +112,21 @@ function CustomTabBar({state, descriptors, navigation}) {
               testID={options.tabBarButtonTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={[flex.flex1, flex.itemsCenter, flex.justifyCenter, flex.gap4]}>
-              <Image source={label === 'HomeStack' ? homeIcon : favoriteIcon} style={{width: 20, height: 20}} />
+              style={[
+                flex.flex1,
+                flex.widthFull,
+                flex.heightFull,
+                flex.itemsCenter,
+                flex.justifyCenter,
+                flex.gap4,
+              ]}>
+              <Image
+                source={label === 'HomeStack' ? IMAGES.home : IMAGES.love}
+                style={{width: 20, height: 20}}
+              />
               <TextNormal
                 style={{color: isFocused ? colors.primary : colors.text}}>
-                {label.replace('Stack', '')}
+                {label.toString().replace('Stack', '')}
               </TextNormal>
             </PlatformPressable>
           </View>

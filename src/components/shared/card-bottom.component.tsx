@@ -4,9 +4,9 @@ import {StyleSheet, View} from 'react-native';
 // ** Constants
 import {useTheme} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {CardProps} from './Card';
-import {flex, SHADOW_STYLE, spacing} from '../styles';
-import {APP_WIDTH, SIZE_APP, StyleSheetProps} from '../utils/constants';
+import {CardProps} from './card.component';
+import {flex, SHADOW_STYLE, spacing} from '@styles/index';
+import {APP_WIDTH, StyleSheetProps, SIZE_APP} from '@utils/constants';
 interface CartBottomProps extends CardProps {
   absolute?: boolean;
   noBackground?: boolean;

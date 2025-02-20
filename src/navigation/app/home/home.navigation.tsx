@@ -1,5 +1,6 @@
-import { HomeStackParamList } from './types';
-import {HomeScreen} from '../../../screens';
+import React from 'react';
+import {HomeScreen} from '@screens/app';
+import {HomeStackParamList} from './types';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 
 const Stack = createStackNavigator<HomeStackParamList>();

@@ -1,5 +1,5 @@
+import {APP_HEIGHT, APP_WIDTH} from '@utils/constants';
 import {StyleSheet} from 'react-native';
-import {APP_HEIGHT, APP_WIDTH} from '../utils/constants';
 
 export const flex = StyleSheet.create({
   zIndex: {

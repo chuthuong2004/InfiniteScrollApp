@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import TextNormal from './TextNormal';
+import TextNormal from './text-normal.component';
 import React from 'react';
 
 type EmptyComponentProps = {

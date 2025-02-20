@@ -1,4 +1,4 @@
-import {COLORS_APP} from '../utils/constants';
+import {COLORS_APP} from '@utils/constants';
 import {Platform, StyleSheet} from 'react-native';
 
 export const SHADOW_STYLE = StyleSheet.create({

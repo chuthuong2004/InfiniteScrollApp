@@ -1,18 +1,20 @@
+import {TextNormal} from '@components/shared';
+import {useNetworkInternet} from '@hooks/systems';
+import {AppNavigation} from '@navigation/app';
 import {NavigationContainer} from '@react-navigation/native';
+import {flex} from '@styles/flex.style';
+import {APP_COLORS_LIGHT, COLORS_APP} from '@utils/constants';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {
   initialWindowMetrics,
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
-import {flex} from '../styles';
-import {APP_COLORS_LIGHT, COLORS_APP} from '../utils/constants';
-import {AppNavigation} from './app';
-import { useNetworkInternet } from '../hooks';
 
 const Navigation = () => {
   const isInternet = useNetworkInternet();
+
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <View style={[flex.flex1]}>
@@ -26,7 +28,9 @@ const Navigation = () => {
               <AppNavigation />
               {!isInternet && (
                 <View style={styles.isInternet}>
-                  <Text>No internet connection !</Text>
+                  <TextNormal align="center">
+                    No internet connection !
+                  </TextNormal>
                 </View>
               )}
             </View>

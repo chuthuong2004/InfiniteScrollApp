@@ -1,13 +1,13 @@
-import {removePropertyUndefined} from '../../utils/helpers';
-import {axiosClient} from '../../lib';
-import {QueryOptions, ResponsePagination, StoreProduct} from '../../types';
+import {QueryOptions, ResponsePagination} from '@/types/common.type';
+import {StoreProduct} from '@/types/entities';
+import axiosClient from '@lib/axios';
+import {removePropertyUndefined} from '@utils/helpers';
 
 const URL = '/products';
 const productService = {
   getAll: async (
     params: QueryOptions,
   ): Promise<ResponsePagination<StoreProduct>> => {
-    console.log('Call API: ', params);
     let url = URL;
     if (params?.search && params?.search?.length > 0) {
       url += '/search';
@@ -16,9 +16,10 @@ const productService = {
     delete params.search;
 
     params = removePropertyUndefined(params);
-    console.log('PARAMS: ', params);
 
     return axiosClient.get(url, {params});
   },
+  getById: async (id: StoreProduct['id']): Promise<StoreProduct> =>
+    axiosClient.get(`${URL}/${id}`),
 };
 export default productService;

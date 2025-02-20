@@ -1,24 +1,9 @@
+import {QueryOptions, ResponsePagination} from '@/types/index';
 import {useCallback, useState} from 'react';
 import useSWR from 'swr';
-import {QueryOptions, ResponsePagination} from '../../types';
 
 type Fetcher<T> = (query: QueryOptions) => Promise<ResponsePagination<T>>;
 
-/**
- *
- * @param key The key of the fetcher SWR
- * @param query The object of QueryOptions (page, limit, offset,...)
- * @param fetcher The callback to fetch data from API
- * @param inverted If true, data return will be reverted
- * @returns {Object} The list data with pagination
- *  @property {boolean} isLoading: true if the api is fetching
- *  @property {boolean} isValidating: true if the api is validating
- *  @property {Object} data: The list data with pagination
- *  @property {boolean} isError: true if the api is error
- *  @property {boolean} isLoadMore: true if the api is load more
- *  @property {function} loadMore: This callback will be load more data
- *  @property {function} refresh: This callback will be refresh data
- */
 export function usePagination<T>(
   key: string,
   query: QueryOptions,
@@ -42,10 +27,6 @@ export function usePagination<T>(
       ...swrConfig,
     },
   );
-
-  // useEffect(() => {
-  //   mutate();
-  // }, [query.search, mutate]);
 
   /**
    * @remarks

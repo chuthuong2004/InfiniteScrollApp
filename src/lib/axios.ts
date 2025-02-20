@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL} from '../configs';
+import {BASE_URL} from 'configs';
 
 // ** Key chain
 const axiosClient = axios.create({

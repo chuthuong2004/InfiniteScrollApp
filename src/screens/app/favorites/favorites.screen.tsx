@@ -1,20 +1,26 @@
+import {StoreProduct} from '@/types/entities';
+import {ProductItem} from '@components/app';
+import {Header} from '@components/layouts';
+import {SearchComponent, TextNormal, EmptyComponent} from '@components/shared';
+import {useSearch} from '@hooks/helpers';
+import {useFavorite} from '@hooks/services';
 import {useNavigation, useTheme} from '@react-navigation/native';
-import React, {useCallback} from 'react';
+import {flex, SHADOW_STYLE, spacing} from '@styles/index';
+import React, {useCallback, useMemo} from 'react';
 import {FlatList, FlatListProps, ListRenderItem, View} from 'react-native';
-import {
-  EmptyComponent,
-  Header,
-  ProductItem,
-  TextNormal,
-} from '../../../components';
-import {useFavorite} from '../../../hooks/services';
-import {flex, spacing} from '../../../styles';
-import {StoreProduct} from '../../../types';
 
 const FavoriteScreen = () => {
   const navigation = useNavigation();
   const {favorites, onFavorite} = useFavorite();
-
+  const {search, debounceSearch, onChangeSearch} = useSearch();
+  const data = useMemo(() => {
+    if (debounceSearch === '') {
+      return favorites;
+    }
+    return favorites.filter(x =>
+      x.title.toLowerCase().includes(debounceSearch.toLowerCase()),
+    );
+  }, [favorites, debounceSearch]);
   const renderItem = useCallback<ListRenderItem<StoreProduct>>(
     ({item}) => {
       const isFavorite = favorites.find(x => x.id === item.id);
@@ -42,13 +48,18 @@ const FavoriteScreen = () => {
           navigation.goBack();
         }}
       />
-
+      <SearchComponent
+        placeholder="Search..."
+        style={[spacing('margin').horizontal, SHADOW_STYLE.shadowCard]}
+        onChangeText={onChangeSearch}
+        value={search}
+      />
       <View style={[spacing('padding').around]}>
-        <TextNormal>List of favorite products ({favorites.length})</TextNormal>
+        <TextNormal>List of favorite products ({data.length})</TextNormal>
       </View>
       <FlatList
         keyExtractor={keyExtractor}
-        data={favorites}
+        data={data}
         renderItem={renderItem}
         ListEmptyComponent={
           <EmptyComponent title="Không có sản phẩm yêu thích nào." />
@@ -58,16 +69,8 @@ const FavoriteScreen = () => {
           spacing('padding').horizontal,
           spacing('padding').bottom,
         ]}
-        // ListFooterComponent={
-        //   <View style={[spacing('padding', 10).bottom]}>
-        //     {isLoadMore ? <ActivityIndicator size="large" /> : null}
-        //   </View>
-        // }
-        // onRefresh={refresh}
-        // refreshing={isValidating}
+        ListFooterComponent={<View style={[spacing('padding', 10).bottom]} />}
         showsVerticalScrollIndicator={false}
-        onEndReachedThreshold={0}
-        // onEndReached={onEndReached}
       />
     </View>
   );

@@ -1,13 +1,13 @@
 import {useTheme} from '@react-navigation/native';
+import {
+  TextVariant,
+  SizeText,
+  COLORS_APP,
+  StyleSheetProps,
+  FONT_SIZE,
+} from '@utils/constants';
 import React, {forwardRef} from 'react';
 import {StyleSheet, Text, TextProps, TextStyle} from 'react-native';
-import {
-  COLORS_APP,
-  FONT_SIZE,
-  SizeText,
-  StyleSheetProps,
-  TextVariant,
-} from '../utils/constants';
 
 export interface TextNormalProps extends TextProps {
   error?: boolean;
@@ -20,7 +20,6 @@ export interface TextNormalProps extends TextProps {
   textTransform?: TextStyle['textTransform'];
   fontStyle?: TextStyle['fontStyle'];
 }
-// eslint-disable-next-line react/display-name
 const TextNormal = forwardRef<Text, TextNormalProps>((props, ref) => {
   const {children, error, text, ...passProps} = props;
 

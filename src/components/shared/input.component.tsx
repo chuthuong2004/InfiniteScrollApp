@@ -1,26 +1,30 @@
-import React, { forwardRef, useState } from 'react';
+import React, {forwardRef, useState} from 'react';
 import {
   Platform,
   Pressable,
   StyleSheet,
   TextInput,
   TextInputProps,
-  View
+  View,
 } from 'react-native';
 
 // ** Components
 
 // ** React navigation
-import { useTheme } from '@react-navigation/native';
-import { flex } from '../styles';
-import { COLORS_APP, FONT_SIZE, StyleSheetProps, TextVariant } from '../utils/constants';
-import TextNormal from './TextNormal';
+import {useTheme} from '@react-navigation/native';
+import TextNormal from './text-normal.component';
+import {flex} from '@styles/flex.style';
+import {
+  TextVariant,
+  COLORS_APP,
+  StyleSheetProps,
+  FONT_SIZE,
+} from '@utils/constants';
 
 export interface InputComponentProps extends TextInputProps {
   contentSizeChange?: boolean;
   transparent?: boolean;
   iconLeft?: any;
-  onPressRight?: TextInputProps['onPressIn'];
   iconRight?: any;
   error?: string;
   label?: string;
@@ -43,7 +47,6 @@ const InputComponent = forwardRef<TextInput, InputComponentProps>(
       transparent,
       iconLeft,
       multiline,
-      onPressRight,
       value,
       iconRight,
       placeholder,
@@ -71,11 +74,6 @@ const InputComponent = forwardRef<TextInput, InputComponentProps>(
       variant,
       dark,
     });
-    const colorIcon = {
-      error: COLORS_APP.danger,
-      primary: colors.primary,
-      text: colors.text,
-    };
     const Component = props.onPressIn ? Pressable : View;
     return (
       <View style={[flex.gap4, props.style]}>

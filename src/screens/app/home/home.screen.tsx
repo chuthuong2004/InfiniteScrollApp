@@ -1,24 +1,20 @@
-import { useTheme } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import {StoreProduct} from '@/types/entities';
+import {ProductItem} from '@components/app';
+import {Header} from '@components/layouts';
+import {SearchComponent, TextNormal, EmptyComponent} from '@components/shared';
+import {usePagination, useSearch} from '@hooks/helpers';
+import {useFavorite} from '@hooks/services';
+import {useTheme} from '@react-navigation/native';
+import {productService} from '@services/products';
+import {flex, SHADOW_STYLE, spacing} from '@styles/index';
+import React, {useCallback} from 'react';
 import {
   ActivityIndicator,
   FlatList,
   FlatListProps,
   ListRenderItem,
-  View
+  View,
 } from 'react-native';
-import {
-  EmptyComponent,
-  Header,
-  ProductItem,
-  SearchComponent,
-  TextNormal,
-} from '../../../components';
-import { usePagination, useSearch } from '../../../hooks/helpers';
-import { useFavorite } from '../../../hooks/services';
-import { productService } from '../../../services';
-import { flex, SHADOW_STYLE, spacing } from '../../../styles';
-import { StoreProduct } from '../../../types';
 
 const HomeScreen = () => {
   const {search, debounceSearch, onChangeSearch} = useSearch();
@@ -73,7 +69,7 @@ const HomeScreen = () => {
         keyExtractor={keyExtractor}
         data={data?.products}
         renderItem={renderItem}
-        ListEmptyComponent={<EmptyComponent title="Không có sản phẩm nào." />}
+        ListEmptyComponent={<EmptyComponent title="No products available !" />}
         contentContainerStyle={[
           flex.gap10,
           spacing('padding').horizontal,

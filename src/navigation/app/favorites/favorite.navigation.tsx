@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import {FavoritesScreen} from '../../../screens';
 import {FavoriteStackParamList} from './types';
+import {FavoritesScreen} from '@screens/app';
 
 const Stack = createStackNavigator<FavoriteStackParamList>();
 

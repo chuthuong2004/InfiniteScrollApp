@@ -1,8 +1,8 @@
 import {useTheme} from '@react-navigation/native';
+import {SHADOW_STYLE} from '@styles/index';
+import {APP_COLORS_LIGHT, StyleSheetProps} from '@utils/constants';
 import React, {memo} from 'react';
 import {StyleSheet, View, ViewProps} from 'react-native';
-import {SHADOW_STYLE} from '../styles';
-import {APP_COLORS_LIGHT, StyleSheetProps} from '../utils/constants';
 
 export interface CardProps extends ViewProps {
   shadow?: boolean;

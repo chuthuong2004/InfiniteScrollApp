@@ -1,3 +1,43 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@assets/*": ["./assets/*"],
+      "@assets": ["./assets/index.{ts,tsx}"],
+
+      "@components/*": ["./components/*"],
+      "@components": ["./components/index.{ts,tsx}"],
+
+      "@configs/*": ["./config/*"],
+      "@configs": ["./config/index.{ts,tsx}"],
+
+      "@hooks/*": ["./hooks/*"],
+      "@hooks": ["./hooks/index.{ts,tsx}"],
+
+      "@lib/*": ["./lib/*"],
+      "@lib": ["./lib/index.{ts,tsx}"],
+
+      "@navigation/*": ["./navigation/*"],
+      "@navigation": ["./navigation/index.{ts,tsx}"],
+
+      "@screens/*": ["./screens/*"],
+      "@screens": ["./screens/index.{ts,tsx}"],
+
+      "@services/*": ["./services/*"],
+      "@services": ["./services/index.{ts,tsx}"],
+
+      "@/store/*": ["./store/*"],
+      "@/store": ["./store/index.{ts,tsx}"],
+
+      "@styles/*": ["./styles/*"],
+      "@styles": ["./styles/index.{ts,tsx}"],
+
+      "@/types/*": ["./types/*"],
+      "@/types": ["./types/index.{ts,tsx}"],
+
+      "@utils/*": ["./utils/*"],
+      "@utils": ["./utils/index.{ts,tsx}"]
+    }
+  }
 }
