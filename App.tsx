@@ -6,10 +6,10 @@
  */
 import Navigation from './src/navigation';
 import React from 'react';
-import { AppState } from 'react-native';
+import {AppState} from 'react-native';
 import 'react-native-gesture-handler';
-
-import { SWRConfig } from 'swr';
+import 'react-native-reanimated';
+import {SWRConfig} from 'swr';
 
 function App(): React.JSX.Element {
   return (

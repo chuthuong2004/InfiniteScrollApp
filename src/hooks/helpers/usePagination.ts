@@ -79,7 +79,10 @@ export function usePagination<T>(
   }, [fetcher, loadMoreByOffset, mutate, query]);
   const onEndReached = useCallback(
     (info: {distanceFromEnd: number}) => {
-      if (info.distanceFromEnd === 0 && data && data?.products?.length > 0) {
+      console.log('🔥 onEndReached CALLED!');
+      console.log('info: ', info);
+
+      if (data && data?.products?.length > 0) {
         loadMore();
       }
     },

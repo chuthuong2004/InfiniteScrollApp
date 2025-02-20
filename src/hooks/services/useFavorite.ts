@@ -12,19 +12,20 @@ export function useFavorite() {
 
   const onFavorite = useCallback(
     (product: StoreProduct) => {
-      const products: StoreProduct[] = favoriteJSON
-        ? JSON.parse(favoriteJSON)
-        : [];
+      setFavorites(prev => {
+        const products: StoreProduct[] = prev ? JSON.parse(prev) : [];
+        const index = products.findIndex(item => item.id === product.id);
 
-      if (products.find(item => item.id === product.id)) {
-        const newProducts = products.filter(item => item.id !== product.id);
-        setFavorites(JSON.stringify(newProducts));
-        return;
-      }
+        if (index !== -1) {
+          return JSON.stringify(
+            products.filter(item => item.id !== product.id),
+          );
+        }
 
-      setFavorites(JSON.stringify([product, ...products]));
+        return JSON.stringify([product, ...products]);
+      });
     },
-    [favoriteJSON, setFavorites],
+    [setFavorites],
   );
 
   const favorites: StoreProduct[] = favoriteJSON

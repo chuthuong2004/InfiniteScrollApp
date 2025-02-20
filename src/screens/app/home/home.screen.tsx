@@ -1,13 +1,13 @@
 import {StoreProduct} from '@/types/entities';
 import {ProductItem} from '@components/app';
 import {Header} from '@components/layouts';
-import {SearchComponent, TextNormal, EmptyComponent} from '@components/shared';
+import {EmptyComponent, SearchComponent, TextNormal} from '@components/shared';
 import {usePagination, useSearch} from '@hooks/helpers';
 import {useFavorite} from '@hooks/services';
 import {useTheme} from '@react-navigation/native';
 import {productService} from '@services/products';
 import {flex, SHADOW_STYLE, spacing} from '@styles/index';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -15,35 +15,38 @@ import {
   ListRenderItem,
   View,
 } from 'react-native';
-
 const HomeScreen = () => {
   const {search, debounceSearch, onChangeSearch} = useSearch();
   const {favorites, onFavorite} = useFavorite();
-  const {data, isLoadMore, onEndReached, isValidating, refresh} = usePagination(
-    'GetListProduct',
-    {
-      skip: 0,
-      limit: 20,
-      select: 'id,title,price,images',
-      search: debounceSearch,
-    },
-    productService.getAll,
-  );
+  const {data, isLoadMore, onEndReached, isValidating, refresh, isLoading} =
+    usePagination(
+      'GetListProduct',
+      {
+        skip: 0,
+        limit: 20,
+        select: 'id,title,price,images',
+        search: debounceSearch,
+      },
+      productService.getAll,
+    );
 
-  console.log('data: ', data);
+  const favoriteIds = useMemo(
+    () => new Set(favorites.map(fav => fav.id)),
+    [favorites],
+  );
 
   const renderItem = useCallback<ListRenderItem<StoreProduct>>(
     ({item}) => {
-      const isFavorite = favorites.find(x => x.id === item.id);
+      const isFavorite = favoriteIds.has(item.id);
       return (
         <ProductItem
           product={item}
-          isFavorite={!!isFavorite}
+          isFavorite={isFavorite}
           onFavorite={onFavorite}
         />
       );
     },
-    [favorites, onFavorite],
+    [favoriteIds, onFavorite],
   );
 
   const keyExtractor: FlatListProps<StoreProduct>['keyExtractor'] = useCallback(
@@ -66,9 +69,15 @@ const HomeScreen = () => {
         </TextNormal>
       </View>
       <FlatList
+        testID="flatlist"
         keyExtractor={keyExtractor}
         data={data?.products}
         renderItem={renderItem}
+        ListHeaderComponent={
+          isLoading && !data?.products?.length ? (
+            <ActivityIndicator size="large" />
+          ) : null
+        }
         ListEmptyComponent={<EmptyComponent title="No products available !" />}
         contentContainerStyle={[
           flex.gap10,
@@ -80,11 +89,13 @@ const HomeScreen = () => {
             {isLoadMore ? <ActivityIndicator size="large" /> : null}
           </View>
         }
+        extraData={favoriteIds}
         onRefresh={refresh}
         refreshing={isValidating}
         showsVerticalScrollIndicator={false}
-        onEndReachedThreshold={0}
+        onEndReachedThreshold={0.5}
         onEndReached={onEndReached}
+        removeClippedSubviews={true}
       />
     </View>
   );
