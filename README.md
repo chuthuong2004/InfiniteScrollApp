@@ -115,5 +115,3 @@ npm test  # or yarn test
 ```
 
 ---
-
-This README provides a quick overview of the project setup, dependencies, state management approach, and performance optimizations. 🚀
