@@ -24,7 +24,7 @@ const HomeScreen = () => {
       {
         skip: 0,
         limit: 20,
-        select: 'id,title,price,images',
+        select: 'id,title,price,thumbnail',
         search: debounceSearch,
       },
       productService.getAll,

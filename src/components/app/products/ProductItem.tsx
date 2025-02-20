@@ -94,7 +94,7 @@ const ProductItem = ({product, isFavorite, onFavorite}: ProductItemProps) => {
           <Card shadow style={[flex.row, flex.gap10, flex.itemsCenter]}>
             <Image
               source={{
-                uri: product.images[0],
+                uri: product.thumbnail,
               }}
               style={[
                 styles.productImage,
